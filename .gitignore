@@ -1,0 +1,66 @@
+# === Python ===
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+.Python
+env/
+venv/
+.venv/
+
+# === VS Code / PyCharm ===
+.vscode/
+.idea/
+
+# === Logs and temp files ===
+*.log
+*.tmp
+*.bak
+*.swp
+.DS_Store
+
+# === Output folders ===
+output_dir/
+temp_dir/
+*.jsonl
+*.csv
+*.pdf
+
+# === Paper2Code artifacts ===
+**/planning_trajectories.json
+**/task_list.json
+**/planning_config.yaml
+**/accumulated_cost.json
+**/*_simple_analysis_*.json
+**/*_simple_analysis.txt
+**/analyzing_artifacts/
+**/coding_artifacts/
+
+# === Kiro (custom) AI output or test data ===
+**/kiro_*.*
+**/*_kiro.*
+**/kiro_outputs/
+**/kiro_cache/
+
+# === Secret or sensitive files ===
+.env
+*.key
+*.pem
+*.crt
+secrets.json
+config.yaml  # optional, only if yours includes secrets
+
+# === Docker / Jupyter / Misc ===
+*.ipynb
+*.dockerfile
+*.db
+*.sqlite
+*.tar
+*.zip
+*.7z
+*.gz
+
+# === System files ===
+Thumbs.db
+ehthumbs.db
+desktop.ini
