@@ -15,12 +15,15 @@ COPY . .
 # Build the application
 RUN npm run build
 
-# Use nginx to serve the built app
-FROM nginx:alpine
-COPY --from=0 /app/build /usr/share/nginx/html
+# Install serve for production
+RUN npm install -g serve
 
-# Copy nginx configuration
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Expose port
+EXPOSE 3000
 
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:3000 || exit 1
+
+# Start the application
+CMD ["serve", "-s", "build", "-l", "3000"]

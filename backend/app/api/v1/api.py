@@ -1,35 +1,17 @@
 """
-API v1 router configuration
+API v1 router
 """
-from fastapi import APIRouter
-from app.api.v1.endpoints import auth, subscription, content, template
 
+from fastapi import APIRouter
+
+# Create main API router
 api_router = APIRouter()
 
-# Include authentication routes
-api_router.include_router(
-    auth.router,
-    prefix="/auth",
-    tags=["authentication"]
-)
-
-# Include subscription routes
-api_router.include_router(
-    subscription.router,
-    prefix="/subscription",
-    tags=["subscription"]
-)
-
-# Include content generation routes
-api_router.include_router(
-    content.router,
-    prefix="/content",
-    tags=["content"]
-)
-
-# Include template management routes
-api_router.include_router(
-    template.router,
-    prefix="/templates",
-    tags=["templates"]
-)
+# Basic health check endpoint
+@api_router.get("/health")
+async def health_check():
+    return {
+        "status": "healthy",
+        "service": "ai-blog-assistant-api",
+        "version": "1.0.0"
+    }

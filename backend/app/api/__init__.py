@@ -1,3 +1,3 @@
 """
-API package for FastAPI routes
+API package for AI Blog Assistant
 """

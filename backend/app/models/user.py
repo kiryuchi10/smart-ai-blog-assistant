@@ -2,7 +2,6 @@
 User management models for authentication and subscription handling
 """
 from sqlalchemy import Column, String, Integer, Boolean, DateTime, DECIMAL, Text, JSON
-from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
 from app.core.database import Base
@@ -26,11 +25,6 @@ class User(Base):
     is_verified = Column(Boolean, default=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
-    
-    # Relationships
-    blog_posts = relationship("BlogPost", back_populates="user", cascade="all, delete-orphan")
-    scheduled_posts = relationship("ScheduledPost", back_populates="user", cascade="all, delete-orphan")
-    platform_integrations = relationship("PlatformIntegration", back_populates="user", cascade="all, delete-orphan")
     
     def __repr__(self):
         return f"<User(id={self.id}, email={self.email})>"

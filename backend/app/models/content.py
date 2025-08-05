@@ -2,7 +2,6 @@
 Content management models for blog posts, versions, and templates
 """
 from sqlalchemy import Column, String, Integer, Boolean, DateTime, Text, ForeignKey, JSON
-from sqlalchemy.dialects.postgresql import JSONB, ARRAY
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
 from app.core.database import Base
@@ -32,13 +31,6 @@ class BlogPost(Base):
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
     
-    # Relationships
-    user = relationship("User", back_populates="blog_posts")
-    versions = relationship("PostVersion", back_populates="post", cascade="all, delete-orphan")
-    scheduled_posts = relationship("ScheduledPost", back_populates="post", cascade="all, delete-orphan")
-    analytics = relationship("PostAnalytics", back_populates="post", cascade="all, delete-orphan")
-    seo_metrics = relationship("SEOMetrics", back_populates="post", cascade="all, delete-orphan")
-    
     def __repr__(self):
         return f"<BlogPost(id={self.id}, title={self.title[:50]})>"
     
@@ -56,26 +48,6 @@ class BlogPost(Base):
         return self.word_count
 
 
-class PostVersion(Base):
-    """Post version history for revision tracking"""
-    __tablename__ = "post_versions"
-    
-    id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
-    post_id = Column(String(36), ForeignKey("blog_posts.id", ondelete="CASCADE"), nullable=False)
-    version_number = Column(Integer, nullable=False)
-    title = Column(String(500))
-    content = Column(Text)
-    changes_summary = Column(Text)
-    word_count = Column(Integer, default=0)
-    created_at = Column(DateTime(timezone=True), server_default=func.now())
-    
-    # Relationships
-    post = relationship("BlogPost", back_populates="versions")
-    
-    def __repr__(self):
-        return f"<PostVersion(post_id={self.post_id}, version={self.version_number})>"
-
-
 class ContentTemplate(Base):
     """Content templates for reusable blog post structures"""
     __tablename__ = "content_templates"
@@ -85,12 +57,16 @@ class ContentTemplate(Base):
     description = Column(Text)
     template_content = Column(Text, nullable=False)
     category = Column(String(100))  # how-to, listicle, review, comparison, etc.
+    template_type = Column(String(50), default='article')  # article, how_to, listicle, etc.
     industry = Column(String(100))  # tech, health, finance, lifestyle, etc.
     tone = Column(String(50), default='professional')
     is_public = Column(Boolean, default=False)
     usage_count = Column(Integer, default=0)
     variables = Column(JSON)  # Template variables for customization
     seo_guidelines = Column(JSON)  # SEO recommendations for this template type
+    tags = Column(JSON)  # Template tags for categorization
+    placeholders = Column(JSON)  # Extracted placeholders from template content
+    created_by = Column(String(36), ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
     

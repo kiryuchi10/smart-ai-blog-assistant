@@ -1,0 +1,185 @@
+# =============================================================================
+# AI Blog Assistant - Git Attributes Configuration
+# Handles line endings, file types, and Git LFS for large files
+# =============================================================================
+
+# =============================================================================
+# LINE ENDINGS
+# =============================================================================
+# Set default behavior to automatically normalize line endings
+* text=auto
+
+# Force Unix line endings for these file types
+*.py text eol=lf
+*.js text eol=lf
+*.jsx text eol=lf
+*.ts text eol=lf
+*.tsx text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.sh text eol=lf
+*.sql text eol=lf
+*.css text eol=lf
+*.scss text eol=lf
+*.html text eol=lf
+*.xml text eol=lf
+*.txt text eol=lf
+*.env text eol=lf
+*.ini text eol=lf
+*.cfg text eol=lf
+*.conf text eol=lf
+
+# Force Windows line endings for batch files
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# =============================================================================
+# BINARY FILES
+# =============================================================================
+# Declare files that will always be binary and should not be modified
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.mov binary
+*.mp4 binary
+*.mp3 binary
+*.flv binary
+*.fla binary
+*.swf binary
+*.gz binary
+*.zip binary
+*.7z binary
+*.ttf binary
+*.eot binary
+*.woff binary
+*.woff2 binary
+*.pyc binary
+*.pdf binary
+*.ez binary
+*.bz2 binary
+*.swp binary
+*.db binary
+*.sqlite binary
+*.sqlite3 binary
+
+# =============================================================================
+# LANGUAGE-SPECIFIC SETTINGS
+# =============================================================================
+# Python
+*.py diff=python
+
+# JavaScript/TypeScript
+*.js diff=javascript
+*.jsx diff=javascript
+*.ts diff=typescript
+*.tsx diff=typescript
+
+# CSS
+*.css diff=css
+*.scss diff=css
+
+# HTML
+*.html diff=html
+
+# SQL
+*.sql diff=sql
+
+# =============================================================================
+# SECURITY & SECRETS
+# =============================================================================
+# Mark sensitive files (these should be in .gitignore anyway)
+*.key binary
+*.pem binary
+*.p12 binary
+*.pfx binary
+.env filter=git-crypt diff=git-crypt
+.env.* filter=git-crypt diff=git-crypt
+*secret* filter=git-crypt diff=git-crypt
+*credential* filter=git-crypt diff=git-crypt
+*password* filter=git-crypt diff=git-crypt
+
+# =============================================================================
+# GIT LFS (Large File Storage)
+# =============================================================================
+# Use Git LFS for large files to avoid bloating the repository
+# Uncomment and configure as needed
+
+# Machine learning models
+# *.model filter=lfs diff=lfs merge=lfs -text
+# *.pkl filter=lfs diff=lfs merge=lfs -text
+# *.joblib filter=lfs diff=lfs merge=lfs -text
+# *.h5 filter=lfs diff=lfs merge=lfs -text
+# *.pb filter=lfs diff=lfs merge=lfs -text
+
+# Large datasets
+# *.csv filter=lfs diff=lfs merge=lfs -text
+# *.json filter=lfs diff=lfs merge=lfs -text
+# *.parquet filter=lfs diff=lfs merge=lfs -text
+
+# Media files
+# *.mp4 filter=lfs diff=lfs merge=lfs -text
+# *.avi filter=lfs diff=lfs merge=lfs -text
+# *.mov filter=lfs diff=lfs merge=lfs -text
+# *.mp3 filter=lfs diff=lfs merge=lfs -text
+# *.wav filter=lfs diff=lfs merge=lfs -text
+
+# Archives
+# *.zip filter=lfs diff=lfs merge=lfs -text
+# *.tar.gz filter=lfs diff=lfs merge=lfs -text
+# *.rar filter=lfs diff=lfs merge=lfs -text
+
+# =============================================================================
+# DIFF SETTINGS
+# =============================================================================
+# Custom diff drivers for better diffs
+*.json diff=json
+*.md diff=markdown
+
+# =============================================================================
+# MERGE SETTINGS
+# =============================================================================
+# Custom merge strategies
+*.json merge=union
+package-lock.json merge=ours
+yarn.lock merge=ours
+
+# =============================================================================
+# EXPORT-IGNORE
+# =============================================================================
+# Files to exclude from git archive exports
+.gitignore export-ignore
+.gitattributes export-ignore
+.github/ export-ignore
+tests/ export-ignore
+docs/ export-ignore
+*.test.* export-ignore
+*.spec.* export-ignore
+README.md export-ignore
+CHANGELOG.md export-ignore
+CONTRIBUTING.md export-ignore
+LICENSE export-ignore
+
+# =============================================================================
+# LINGUIST OVERRIDES
+# =============================================================================
+# Override GitHub's language detection
+*.sql linguist-detectable=true
+*.md linguist-detectable=false
+docs/* linguist-documentation
+examples/* linguist-documentation
+tests/* linguist-detectable=false
+*.min.js linguist-generated=true
+*.min.css linguist-generated=true
+dist/* linguist-generated=true
+build/* linguist-generated=true
+
+# =============================================================================
+# CUSTOM ATTRIBUTES
+# =============================================================================
+# Add any custom attributes specific to your project
+# Example:
+# *.custom-ext custom-attribute=value

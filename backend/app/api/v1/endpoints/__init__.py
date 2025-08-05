@@ -1,3 +1,1 @@
-"""
-API v1 endpoints package
-"""
+# API endpoints

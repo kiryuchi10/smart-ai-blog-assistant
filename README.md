@@ -28,8 +28,11 @@ ai-blog-assistant/
 
 1. Clone the repository
 2. Copy `.env.example` to `.env` and configure your environment variables
-3. Run `docker-compose up -d` to start the development environment
-4. Access the application at http://localhost:3000
+3. Run the setup script: `python setup_full_system.py`
+4. Start the development servers:
+   - Windows: `start_dev.bat`
+   - Unix/Mac: `./start_dev.sh`
+5. Access the application at http://localhost:3000
 
 ## Technology Stack
 
@@ -37,3 +40,30 @@ ai-blog-assistant/
 - **Frontend**: React, Tailwind CSS, React Query
 - **Infrastructure**: Docker, Docker Compose
 - **External APIs**: OpenAI GPT, WordPress, Medium
+
+## Quick Start
+
+1. **Set up environment variables**
+   ```bash
+   cp .env.example .env
+   # Edit .env with your API keys and configuration
+   ```
+
+2. **Run the setup script**
+   ```bash
+   python setup_full_system.py
+   ```
+
+3. **Start the application**
+   ```bash
+   # Windows
+   start_dev.bat
+   
+   # Unix/Mac
+   ./start_dev.sh
+   ```
+
+4. **Access the application**
+   - Frontend: http://localhost:3000
+   - Backend API: http://localhost:8000
+   - API Documentation: http://localhost:8000/docs

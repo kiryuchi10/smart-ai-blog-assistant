@@ -1,8 +1,10 @@
 #!/bin/bash
 
-# AI Blog Assistant Development Setup Script
+# AI Blog Assistant Setup Script
 
-echo "🚀 Setting up AI Blog Assistant development environment..."
+set -e
+
+echo "🚀 Setting up AI Blog Assistant..."
 
 # Check if Docker is installed
 if ! command -v docker &> /dev/null; then
@@ -10,65 +12,63 @@ if ! command -v docker &> /dev/null; then
     exit 1
 fi
 
-# Check if Docker Compose is installed
 if ! command -v docker-compose &> /dev/null; then
     echo "❌ Docker Compose is not installed. Please install Docker Compose first."
     exit 1
 fi
 
-# Create .env file if it doesn't exist
+# Create environment file if it doesn't exist
 if [ ! -f .env ]; then
-    echo "📝 Creating .env file from template..."
+    echo "📝 Creating environment file..."
     cp .env.example .env
-    echo "⚠️  Please update the .env file with your actual API keys and configuration"
+    echo "✅ Environment file created. Please edit .env with your configuration."
 fi
 
-# Create necessary directories
-echo "📁 Creating necessary directories..."
-mkdir -p backend/app/models
-mkdir -p backend/app/api
-mkdir -p backend/app/services
-mkdir -p backend/app/utils
-mkdir -p backend/logs
-mkdir -p uploads
+# Create monitoring directories
+echo "📁 Creating monitoring directories..."
+mkdir -p monitoring/folders monitoring/published monitoring/failed
 
-# Set permissions
-chmod +x setup.sh
+# Set permissions for monitoring directories
+chmod 755 monitoring/folders monitoring/published monitoring/failed
 
-# Build and start the development environment
-echo "🐳 Building Docker containers..."
+# Build and start services
+echo "🐳 Building and starting Docker services..."
 docker-compose build
-
-echo "🔄 Starting development environment..."
 docker-compose up -d
 
 # Wait for services to be ready
 echo "⏳ Waiting for services to start..."
-sleep 10
+sleep 30
 
-# Check if services are running
-echo "🔍 Checking service status..."
-docker-compose ps
+# Check service health
+echo "🔍 Checking service health..."
+if curl -f http://localhost:8000/health > /dev/null 2>&1; then
+    echo "✅ Backend service is healthy"
+else
+    echo "❌ Backend service is not responding"
+fi
 
-# Display access information
+if curl -f http://localhost:3000 > /dev/null 2>&1; then
+    echo "✅ Frontend service is healthy"
+else
+    echo "❌ Frontend service is not responding"
+fi
+
 echo ""
-echo "✅ Setup complete!"
+echo "🎉 Setup complete!"
 echo ""
-echo "🌐 Access your application:"
-echo "   Frontend: http://localhost:3000"
-echo "   Backend API: http://localhost:8000"
-echo "   API Documentation: http://localhost:8000/docs"
+echo "📋 Next steps:"
+echo "1. Edit .env file with your API keys and configuration"
+echo "2. Access the application:"
+echo "   - Frontend: http://localhost:3000"
+echo "   - Backend API: http://localhost:8000"
+echo "   - API Documentation: http://localhost:8000/docs"
+echo "3. Check the monitoring folder: ./monitoring/folders"
 echo ""
-echo "📊 Database and Redis:"
-echo "   PostgreSQL: localhost:5432"
-echo "   Redis: localhost:6379"
+echo "🔧 Useful commands:"
+echo "   - View logs: docker-compose logs -f"
+echo "   - Stop services: docker-compose down"
+echo "   - Restart services: docker-compose restart"
+echo "   - Update services: docker-compose pull && docker-compose up -d"
 echo ""
-echo "🛠️  Useful commands:"
-echo "   Stop services: docker-compose down"
-echo "   View logs: docker-compose logs -f [service_name]"
-echo "   Restart services: docker-compose restart"
-echo ""
-echo "⚠️  Don't forget to:"
-echo "   1. Update your .env file with real API keys"
-echo "   2. Set up your OpenAI API key"
-echo "   3. Configure external platform integrations"
+echo "📚 For more information, see README.md"

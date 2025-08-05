@@ -1,22 +1,16 @@
 """
-Database models for the AI Blog Assistant application
+Database models for AI Blog Assistant
 """
 
-# Import all models to ensure they are registered with SQLAlchemy
+from app.core.database import Base
 from .user import User, SubscriptionPlan
-from .content import BlogPost, PostVersion, ContentTemplate
-from .scheduling import ScheduledPost, PlatformIntegration
-from .analytics import PostAnalytics, SEOMetrics
+from .content import BlogPost, ContentTemplate
 
-# Export all models for easy importing
+# Import all models to ensure they're registered with SQLAlchemy
 __all__ = [
-    "User",
-    "SubscriptionPlan", 
+    "Base",
+    "User", 
+    "SubscriptionPlan",
     "BlogPost",
-    "PostVersion",
     "ContentTemplate",
-    "ScheduledPost",
-    "PlatformIntegration",
-    "PostAnalytics",
-    "SEOMetrics"
 ]

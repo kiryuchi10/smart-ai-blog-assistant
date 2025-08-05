@@ -1,1 +1,3 @@
-# Backend tests package
+"""
+Test package for AI Blog Assistant
+"""

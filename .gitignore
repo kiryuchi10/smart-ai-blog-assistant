@@ -1,66 +1,577 @@
-# === Python ===
+# =============================================================================
+# AI Blog Assistant - Comprehensive .gitignore
+# Protects API keys, secrets, and prevents high-volume commits
+# =============================================================================
+
+# =============================================================================
+# ENVIRONMENT & SECRETS
+# =============================================================================
+# Environment files containing API keys and secrets
+.env
+.env.*
+!.env.example
+.environment
+.secrets
+secrets.json
+config.json
+credentials.json
+
+# API Keys and Authentication
+*api_key*
+*secret*
+*token*
+*password*
+*credentials*
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+jwt_secret*
+oauth_*
+
+# Database credentials
+database.ini
+db_config.*
+connection_string*
+
+# Cloud provider credentials
+.aws/
+.gcp/
+.azure/
+google-credentials.json
+service-account*.json
+
+# =============================================================================
+# PYTHON
+# =============================================================================
+# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
+*$py.class
 *.so
-*.egg-info/
+
+# Distribution / packaging
 .Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Virtual environments
+.env/
+.venv/
 env/
 venv/
-.venv/
+ENV/
+env.bak/
+venv.bak/
+.python-version
 
-# === VS Code / PyCharm ===
-.vscode/
-.idea/
+# Jupyter Notebook
+.ipynb_checkpoints
 
-# === Logs and temp files ===
-*.log
-*.tmp
-*.bak
-*.swp
-.DS_Store
+# IPython
+profile_default/
+ipython_config.py
 
-# === Output folders ===
-output_dir/
-temp_dir/
-*.jsonl
-*.csv
-*.pdf
+# pyenv
+.python-version
 
-# === Paper2Code artifacts ===
-**/planning_trajectories.json
-**/task_list.json
-**/planning_config.yaml
-**/accumulated_cost.json
-**/*_simple_analysis_*.json
-**/*_simple_analysis.txt
-**/analyzing_artifacts/
-**/coding_artifacts/
+# pipenv
+Pipfile.lock
 
-# === Kiro (custom) AI output or test data ===
-**/kiro_*.*
-**/*_kiro.*
-**/kiro_outputs/
-**/kiro_cache/
+# poetry
+poetry.lock
 
-# === Secret or sensitive files ===
-.env
-*.key
-*.pem
-*.crt
-secrets.json
-config.yaml  # optional, only if yours includes secrets
+# Celery
+celerybeat-schedule
+celerybeat.pid
 
-# === Docker / Jupyter / Misc ===
-*.ipynb
-*.dockerfile
+# SageMath parsed files
+*.sage.py
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pytype static type analyzer
+.pytype/
+
+# Cython debug symbols
+cython_debug/
+
+# =============================================================================
+# NODE.JS / FRONTEND
+# =============================================================================
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+*.lcov
+
+# nyc test coverage
+.nyc_output
+
+# Grunt intermediate storage
+.grunt
+
+# Bower dependency directory
+bower_components
+
+# node-waf configuration
+.lock-wscript
+
+# Compiled binary addons
+build/Release
+
+# Dependency directories
+jspm_packages/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional stylelint cache
+.stylelintcache
+
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# parcel-bundler cache
+.cache
+.parcel-cache
+
+# Next.js build output
+.next
+out
+
+# Nuxt.js build / generate output
+.nuxt
+dist
+
+# Gatsby files
+.cache/
+public
+
+# Storybook build outputs
+.out
+.storybook-out
+storybook-static
+
+# Temporary folders
+tmp/
+temp/
+
+# =============================================================================
+# DATABASES
+# =============================================================================
+# SQLite databases
 *.db
 *.sqlite
-*.tar
-*.zip
-*.7z
-*.gz
+*.sqlite3
+*.db-journal
 
-# === System files ===
+# PostgreSQL
+*.sql.gz
+pg_dump_*
+*.backup
+
+# MySQL
+*.sql
+mysql_dump_*
+
+# Database migration files (keep structure, ignore data)
+**/migrations/data/
+**/seeds/
+**/fixtures/
+dump.rdb
+
+# =============================================================================
+# LOGS & MONITORING
+# =============================================================================
+# Log files
+*.log
+logs/
+log/
+*.log.*
+*.out
+*.err
+
+# Runtime logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Application logs
+app.log
+error.log
+access.log
+debug.log
+server.log
+celery.log
+
+# Monitoring and metrics
+*.pid
+*.seed
+*.pid.lock
+
+# =============================================================================
+# DOCKER & CONTAINERS
+# =============================================================================
+# Docker
+.dockerignore
+docker-compose.override.yml
+docker-compose.local.yml
+.docker/
+
+# Kubernetes
+*.kubeconfig
+kube-config
+
+# =============================================================================
+# CLOUD & DEPLOYMENT
+# =============================================================================
+# Terraform
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+terraform.tfvars
+terraform.tfvars.json
+
+# Ansible
+*.retry
+.vault_pass
+
+# Serverless
+.serverless/
+
+# CDK
+cdk.out/
+
+# =============================================================================
+# DEVELOPMENT TOOLS
+# =============================================================================
+# IDEs and editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
 Thumbs.db
+
+# JetBrains
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*.tmp
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# =============================================================================
+# OPERATING SYSTEM
+# =============================================================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
 ehthumbs.db
-desktop.ini
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# =============================================================================
+# HIGH-VOLUME FILES & DIRECTORIES
+# =============================================================================
+# Large datasets
+data/
+datasets/
+*.csv
+*.tsv
+*.json
+*.xml
+*.parquet
+*.h5
+*.hdf5
+*.pkl
+*.pickle
+
+# Media files
+*.mp4
+*.avi
+*.mov
+*.wmv
+*.flv
+*.webm
+*.mp3
+*.wav
+*.flac
+*.aac
+*.ogg
+*.wma
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.bmp
+*.tiff
+*.svg
+*.ico
+*.webp
+*.pdf
+*.doc
+*.docx
+*.ppt
+*.pptx
+*.xls
+*.xlsx
+
+# Archives
+*.zip
+*.rar
+*.7z
+*.tar
+*.tar.gz
+*.tar.bz2
+*.tar.xz
+*.gz
+*.bz2
+*.xz
+
+# Machine learning models
+*.model
+*.pkl
+*.joblib
+*.h5
+*.pb
+*.onnx
+*.tflite
+models/
+checkpoints/
+weights/
+
+# Cache directories
+.cache/
+cache/
+.tmp/
+tmp/
+
+# Build artifacts
+build/
+dist/
+out/
+target/
+bin/
+obj/
+
+# =============================================================================
+# APPLICATION-SPECIFIC
+# =============================================================================
+# AI Blog Assistant specific
+monitoring/folders/*/
+monitoring/published/*/
+monitoring/failed/*/
+uploads/
+generated_content/
+exported_data/
+backups/
+
+# Redis dumps
+dump.rdb
+
+# Celery beat schedule
+celerybeat-schedule
+celerybeat.pid
+
+# User uploaded content
+user_uploads/
+media/
+static/media/
+
+# Generated reports
+reports/
+analytics/
+exports/
+
+# =============================================================================
+# TESTING & DEVELOPMENT
+# =============================================================================
+# Test databases
+test.db
+test.sqlite
+test_*.db
+
+# Coverage reports
+htmlcov/
+.coverage
+coverage.xml
+*.cover
+
+# Profiling
+*.prof
+*.profile
+
+# Debug files
+debug/
+*.debug
+
+# =============================================================================
+# BACKUP & TEMPORARY FILES
+# =============================================================================
+# Backup files
+*.bak
+*.backup
+*.old
+*.orig
+*.save
+*~
+
+# Temporary files
+*.tmp
+*.temp
+.temporary/
+
+# Lock files
+*.lock
+.lock
+
+# =============================================================================
+# CUSTOM PATTERNS
+# =============================================================================
+# Add any project-specific patterns here
+# Example:
+# custom_config/
+# private_notes.md
+# local_settings.py
+
+# End of .gitignore

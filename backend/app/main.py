@@ -1,6 +1,7 @@
 """
 FastAPI main application entry point
 """
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
@@ -13,7 +14,7 @@ app = FastAPI(
     title="AI Blog Assistant API",
     description="API for AI-powered blog content generation and management",
     version="1.0.0",
-    debug=settings.debug
+    debug=settings.debug,
 )
 
 # Configure CORS
@@ -27,13 +28,11 @@ app.add_middleware(
 
 # Add trusted host middleware for security (skip in test environment)
 if settings.environment != "test":
-    app.add_middleware(
-        TrustedHostMiddleware,
-        allowed_hosts=settings.allowed_hosts
-)
+    app.add_middleware(TrustedHostMiddleware, allowed_hosts=settings.allowed_hosts)
 
 # Include API routes
 app.include_router(api_router, prefix="/api/v1")
+
 
 @app.on_event("startup")
 async def startup_event():
@@ -41,14 +40,16 @@ async def startup_event():
     # Create database tables if they don't exist
     create_tables()
 
+
 @app.get("/")
 async def root():
     """Health check endpoint"""
     return {
         "message": "AI Blog Assistant API is running",
         "environment": settings.environment,
-        "version": "1.0.0"
+        "version": "1.0.0",
     }
+
 
 @app.get("/health")
 async def health_check():
@@ -58,5 +59,5 @@ async def health_check():
         "service": "ai-blog-assistant-api",
         "version": "1.0.0",
         "environment": settings.environment,
-        "debug": settings.debug
+        "debug": settings.debug,
     }
