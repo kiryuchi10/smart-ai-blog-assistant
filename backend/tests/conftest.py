@@ -59,8 +59,10 @@ async def db_session(test_engine):
 @pytest_asyncio.fixture
 async def sample_subscription_plan(db_session):
     """Create a sample subscription plan for testing"""
+    import uuid
+    unique_name = f"Test Plan {uuid.uuid4().hex[:8]}"
     plan = SubscriptionPlan(
-        name="Test Plan",
+        name=unique_name,
         description="Test subscription plan",
         price_monthly=29.99,
         price_yearly=299.99,
@@ -92,8 +94,10 @@ async def sample_subscription_plan(db_session):
 @pytest_asyncio.fixture
 async def sample_user(db_session, sample_subscription_plan):
     """Create a sample user for testing"""
+    import uuid
+    unique_email = f"test{uuid.uuid4().hex[:8]}@example.com"
     user = User(
-        email="test@example.com",
+        email=unique_email,
         password_hash="hashed_password",
         first_name="Test",
         last_name="User",
@@ -113,3 +117,35 @@ async def sample_user(db_session, sample_subscription_plan):
     await db_session.refresh(user)
     
     return user
+
+
+@pytest_asyncio.fixture
+async def sample_blog_post(db_session, sample_user):
+    """Create a sample blog post for testing"""
+    from app.models.content import BlogPost
+    import uuid
+    
+    unique_slug = f"sample-blog-post-{uuid.uuid4().hex[:8]}"
+    post = BlogPost(
+        user_id=sample_user.id,
+        title="Sample Blog Post",
+        content="This is a sample blog post content for testing purposes.",
+        meta_description="A sample blog post for testing",
+        keywords=["test", "sample", "blog"],
+        status="published",
+        post_type="article",
+        content_source="manual",
+        tone="professional",
+        industry="technology",
+        seo_score=75,
+        word_count=150,
+        reading_time=1,
+        slug=unique_slug,
+        enhancement_applied=True
+    )
+    
+    db_session.add(post)
+    await db_session.commit()
+    await db_session.refresh(post)
+    
+    return post

@@ -1,1 +1,1 @@
-# AI Blog Assistant Backend Application
+# AI Blog Assistant Backend Package

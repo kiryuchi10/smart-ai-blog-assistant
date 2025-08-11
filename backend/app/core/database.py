@@ -1,42 +1,31 @@
 """
-Database configuration and setup
+Database configuration and initialization
 """
-
-import os
-from sqlalchemy import create_engine, MetaData
+from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from app.core.config import settings
 
-# Database URL from environment or default to SQLite
-DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./ai_blog_assistant.db")
-
-# Create engine
+# Create SQLAlchemy engine
 engine = create_engine(
-    DATABASE_URL,
-    connect_args={"check_same_thread": False} if "sqlite" in DATABASE_URL else {}
+    settings.DATABASE_URL,
+    connect_args={"check_same_thread": False} if "sqlite" in settings.DATABASE_URL else {}
 )
 
-# Create session factory
+# Create SessionLocal class
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-# Create base class for models
+# Create Base class
 Base = declarative_base()
 
-# Metadata for table creation
-metadata = MetaData()
-
-def create_tables():
-    """Create database tables"""
-    try:
-        Base.metadata.create_all(bind=engine)
-        print("✅ Database tables created successfully")
-    except Exception as e:
-        print(f"⚠️  Database table creation failed: {e}")
-
+# Dependency to get DB session
 def get_db():
-    """Get database session"""
     db = SessionLocal()
     try:
         yield db
     finally:
         db.close()
+
+async def init_db():
+    """Initialize database tables"""
+    Base.metadata.create_all(bind=engine)

@@ -1,63 +1,52 @@
 """
-FastAPI main application entry point
+AI Blog Assistant - Investment Automation MVP
+FastAPI backend for automated investment blog generation
 """
-
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.middleware.trustedhost import TrustedHostMiddleware
-from .core.config import settings
-from .core.database import create_tables
-from .api.v1.api import api_router
+from contextlib import asynccontextmanager
+import uvicorn
+from app.core.config import settings
+from app.core.database import init_db
+from app.api.investment import router as investment_router
+from app.api.health import router as health_router
 
-# Create FastAPI application
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup
+    await init_db()
+    yield
+    # Shutdown
+    pass
+
 app = FastAPI(
-    title="AI Blog Assistant API",
-    description="API for AI-powered blog content generation and management",
+    title="AI Blog Assistant - Investment MVP",
+    description="Automated investment blog generation with data visualization",
     version="1.0.0",
-    debug=settings.debug,
+    lifespan=lifespan
 )
 
-# Configure CORS
+# CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.allowed_origins,
+    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Add trusted host middleware for security (skip in test environment)
-if settings.environment != "test":
-    app.add_middleware(TrustedHostMiddleware, allowed_hosts=settings.allowed_hosts)
-
-# Include API routes
-app.include_router(api_router, prefix="/api/v1")
-
-
-@app.on_event("startup")
-async def startup_event():
-    """Initialize application on startup"""
-    # Create database tables if they don't exist
-    create_tables()
-
+# Include routers
+app.include_router(health_router, prefix="/api/v1")
+app.include_router(investment_router, prefix="/api/v1")
 
 @app.get("/")
 async def root():
-    """Health check endpoint"""
-    return {
-        "message": "AI Blog Assistant API is running",
-        "environment": settings.environment,
-        "version": "1.0.0",
-    }
+    return {"message": "AI Blog Assistant - Investment Automation MVP"}
 
-
-@app.get("/health")
-async def health_check():
-    """Detailed health check endpoint"""
-    return {
-        "status": "healthy",
-        "service": "ai-blog-assistant-api",
-        "version": "1.0.0",
-        "environment": settings.environment,
-        "debug": settings.debug,
-    }
+if __name__ == "__main__":
+    uvicorn.run(
+        "main:app",
+        host="0.0.0.0",
+        port=8000,
+        reload=True
+    )
